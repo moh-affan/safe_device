@@ -26,6 +26,18 @@ public class SafeDevicePlugin implements FlutterPlugin, MethodCallHandler {
     private Context context;
 
     @Override
+    public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+        context = flutterPluginBinding.getApplicationContext();
+        final MethodChannel channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "safe_device");
+        channel.setMethodCallHandler(this);
+    }
+
+    @Override
+    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        context = null;
+    }
+
+    @Override
     public void onMethodCall(MethodCall call, final Result result) {
         if (call.method.equals("getPlatformVersion")) {
             result.success("Android " + android.os.Build.VERSION.RELEASE);
