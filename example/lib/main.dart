@@ -11,7 +11,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool isJailBroken = false;
-  bool isMockLocation = false;
   bool isRealDevice = false;
   bool isOnExternalStorage = false;
   bool isSafeDevice = false;
@@ -34,7 +33,6 @@ class _MyAppState extends State<MyApp> {
         }
       }
       isJailBroken = await SafeDevice.isJailBroken;
-      isMockLocation = await SafeDevice.isMockLocation;
       isRealDevice = await SafeDevice.isRealDevice;
       isOnExternalStorage = await SafeDevice.isOnExternalStorage;
       isSafeDevice = await SafeDevice.isSafeDevice;
@@ -76,7 +74,6 @@ class _MyAppState extends State<MyApp> {
                 children: <Widget>[
                   buildInfoRow('isJailBroken()', isJailBroken),
                   SizedBox(height: 8),
-                  buildInfoRow('isMockLocation()', isMockLocation),
                   SizedBox(height: 8),
                   buildInfoRow('isRealDevice()', isRealDevice),
                   SizedBox(height: 8),

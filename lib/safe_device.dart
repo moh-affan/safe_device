@@ -17,22 +17,6 @@ class SafeDevice {
     }
   }
 
-  // Can this device mock location - no need to root!
-  static Future<bool> get isMockLocation async {
-    try {
-      if (Platform.isAndroid) {
-        final bool isMockLocation =
-            await _channel.invokeMethod('isMockLocation');
-        return isMockLocation;
-      } else {
-        return !await isRealDevice || await isJailBroken;
-      }
-    } catch (e) {
-      print('Error checking MockLocation status: $e');
-      return false;
-    }
-  }
-
   // Checks whether the device is real or an emulator
   static Future<bool> get isRealDevice async {
     try {
@@ -62,11 +46,10 @@ class SafeDevice {
     try {
       final bool jailBroken = await isJailBroken;
       final bool realDevice = await isRealDevice;
-      final bool mockLocation = await isMockLocation;
       final bool onExternalStorage =
           Platform.isAndroid ? await isOnExternalStorage : false;
 
-      return !(jailBroken || mockLocation || !realDevice || onExternalStorage);
+      return !(jailBroken || !realDevice || onExternalStorage);
     } catch (e) {
       print('Error checking SafeDevice status: $e');
       return false;
