@@ -26,34 +26,6 @@ public class SafeDevicePlugin implements FlutterPlugin, MethodCallHandler {
     private Context context;
 
     @Override
-    public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
-
-        this.context = binding.getApplicationContext();
-        onStart();
-        final MethodChannel channel = new MethodChannel(
-                binding.getBinaryMessenger(),
-                "safe_device"
-        );
-        channel.setMethodCallHandler(this);
-    }
-
-    // onstop
-    public static void onStop() {
-        
-    }
-    // onstart
-    public static void onStart() {
-        
-    }
-
-
-
-    @Override
-    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-        context = null;
-    }
-
-    @Override
     public void onMethodCall(MethodCall call, final Result result) {
         if (call.method.equals("getPlatformVersion")) {
             result.success("Android " + android.os.Build.VERSION.RELEASE);
@@ -67,7 +39,7 @@ public class SafeDevicePlugin implements FlutterPlugin, MethodCallHandler {
             result.success(DevelopmentModeCheck.developmentModeCheck(context));
         } else if (call.method.equals("usbDebuggingCheck")) {
             result.success(DevelopmentModeCheck.usbDebuggingCheck(context));
-        }} else {
+        } else {
             result.notImplemented();
         }
     }
